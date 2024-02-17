@@ -7,6 +7,7 @@ enum PlayerState
     Walk,
     Run,
     Jump,
+    Fall
 };
 
 public class AnimationState : MonoBehaviour
@@ -82,7 +83,9 @@ public class AnimationState : MonoBehaviour
 
     void UpdatePlayerState()
     {
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        bool isGrounded = IsGrounded();
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             currentState = PlayerState.Jump;
         }
@@ -94,6 +97,10 @@ public class AnimationState : MonoBehaviour
         {
             currentState = PlayerState.Walk;
         }
+        else if (!isGrounded && rb.velocity.y < -0.1f)
+        {
+            currentState = PlayerState.Fall;
+        }
         else if (Input.GetKeyDown(KeyCode.X))
         {
             animator.SetTrigger("Die");
@@ -102,7 +109,6 @@ public class AnimationState : MonoBehaviour
         {
             currentState = PlayerState.Idle;
         }
-        
     }
 
     void UpdateAnimation()
@@ -111,6 +117,7 @@ public class AnimationState : MonoBehaviour
         animator.SetBool("IsWalking", currentState == PlayerState.Walk);
         animator.SetBool("IsRunning", currentState == PlayerState.Run);
         animator.SetBool("IsJumping", currentState == PlayerState.Jump);
+        animator.SetBool("IsFalling", currentState == PlayerState.Fall);
     }
 
 }
