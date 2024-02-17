@@ -572,7 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84cb94ddf6d832342b7ab1f5f91573df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 10
+  walkSpeed: 6
   runSpeed: 15
   jumpForce: 5
   groundLayer:
